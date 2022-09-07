@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'apps.shop',
     'django_filters',
+    'mptt',
 
 )
 CUSTOM_APPS = ['user']

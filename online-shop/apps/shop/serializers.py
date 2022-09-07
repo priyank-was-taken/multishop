@@ -29,13 +29,18 @@ class ProductSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     product = ReadProductSerializer(read_only=True, many=True)
     product_count = serializers.SerializerMethodField(read_only=True)
+    children = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ['id', 'word', 'image', 'product_count', 'product']
+        fields = ['id', 'word', 'image', 'product_count', 'product', 'parent', 'children']
 
     def get_product_count(self, obj):
         return obj.product.count()
+
+    def get_children(self, obj):
+        data = obj.get_children()
+        return CategorySerializer(data, many=True).data
 
 
 class ContactSerializer(serializers.ModelSerializer):

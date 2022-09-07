@@ -1,6 +1,7 @@
 from django_extensions.db.models import TimeStampedModel, ActivatorModel
 from django.db import models
 from utils.choice import SIZES, COLORS
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 def user_directory_path(instance, filename):
@@ -8,14 +9,14 @@ def user_directory_path(instance, filename):
     return 'shop_{}/{}'.format(instance, filename)
 
 
-class Category(models.Model):
+class Category(MPTTModel):
+    parent = TreeForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, related_name='children')
     word = models.CharField(max_length=255)
     image = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
-    # product_count = models.IntegerField(null=True, blank=True)
 
-    class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+    class MPTTMeta:
+        # verbose_name_plural = 'Categories'
+        order_insertion_by = ['word']
 
     def __str__(self):
         return self.word
