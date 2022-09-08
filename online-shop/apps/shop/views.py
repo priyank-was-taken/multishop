@@ -34,7 +34,8 @@ class ProductApiView(ListRetrieveView):
 
 
 class CategoryApiView(ListRetrieveView):
-    queryset = models.Category.objects.all()
+    parent = None
+    queryset = models.Category.objects.filter(parent=parent)
     serializer_class = CategorySerializer
 
 

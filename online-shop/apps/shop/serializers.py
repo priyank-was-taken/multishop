@@ -5,7 +5,6 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from user import models
 from apps.shop.models import Category, Product, Contact, Checkout, Newsletter
 from django.contrib.auth.password_validation import validate_password
 
