@@ -12,7 +12,7 @@ from django.contrib.auth.password_validation import validate_password
 class ReadProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'title', 'image', 'price']
+        fields = ['id', 'title', 'image', 'new_price', 'old_price']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'image', 'price', 'description', 'information', 'size', 'color', 'category']
+        fields = ['id', 'title', 'image', 'new_price', 'old_price', 'description', 'information', 'size', 'color', 'category']
         # fields = ['id', 'user', 'status', 'created', 'modified', 'activate_date', 'deactivate_date', 'title', 'image',
         #           'price', 'category']
 

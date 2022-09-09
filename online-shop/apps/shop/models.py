@@ -27,11 +27,12 @@ class Product(TimeStampedModel, ActivatorModel):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product', default=True)
     image = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
-    price = models.CharField(max_length=30)
+    old_price = models.CharField(max_length=30)
+    new_price = models.CharField(max_length=30)
     description = models.TextField(null=True, blank=True)
     information = models.TextField(null=True, blank=True)
-    size = models.CharField(max_length=30, null=True, choices=SIZES)
-    color = models.CharField(max_length=30, null=True, choices=COLORS)
+    size = models.CharField(max_length=30, null=True, blank=True, choices=SIZES)
+    color = models.CharField(max_length=30, null=True, blank=True, choices=COLORS)
 
     class Meta:
         verbose_name = 'Product'

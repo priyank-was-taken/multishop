@@ -22,7 +22,7 @@ class ProductApiView(ListRetrieveView):
 
     search_fields = ['title', 'description', 'information', 'category__word']
 
-    @action(detail=False)
+    @action(detail=False, url_path='', url_name='recent_product')
     def recent_products(self, request):
         recent_products = Product.objects.all().order_by('-created')[:2]
         # page = self.paginate_queryset(recent_products)
