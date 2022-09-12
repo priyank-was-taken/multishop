@@ -45,22 +45,3 @@ class SignupSerializer(serializers.ModelSerializer):
         user.is_active = True
         user.save()
         return user
-
-
-
-# class EmailSerializer(serializers.ModelSerializer):
-#     email1 = serializers.EmailField(max_length=30)
-#
-#     def form_valid(self, form):
-#         data = super().validate(attrs)
-#         send_mail(
-#             'OTP Verification',
-#             "Verified",
-#             'EMAIL_HOST_USER',
-#             'email',
-#             fail_silently=False,
-#         )
-#
-#     class Meta:
-#         model = models.User
-#         fields = ['email1']

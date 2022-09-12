@@ -13,4 +13,3 @@ urlpatterns = [
     path('checkout/', views.CheckoutApiView.as_view(), name='checkout'),
     path('newsletter/', views.NewsletterApiView.as_view(), name='newsletter')
 ]
-
