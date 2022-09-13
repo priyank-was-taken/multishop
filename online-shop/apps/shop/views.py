@@ -53,5 +53,3 @@ class NewsletterApiView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save()
-
-

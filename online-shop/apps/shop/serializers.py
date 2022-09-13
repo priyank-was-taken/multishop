@@ -12,7 +12,7 @@ from django.contrib.auth.password_validation import validate_password
 class ReadProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'title', 'image', 'new_price', 'old_price']
+        fields = ['id', 'title', 'image', 'price', 'old_price']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'image', 'new_price', 'old_price', 'description', 'information', 'size', 'color', 'category']
+        fields = ['id', 'title', 'image', 'price', 'old_price', 'description', 'information', 'size', 'color', 'category']
         # fields = ['id', 'user', 'status', 'created', 'modified', 'activate_date', 'deactivate_date', 'title', 'image',
         #           'price', 'category']
 
@@ -72,21 +72,3 @@ class NewsletterSerializer(serializers.ModelSerializer):
             fail_silently=False,
         )
         return email
-
-    # def create(self, validated_data):
-    #     instance = super(NewsletterSerializer, self).create(validated_data)
-    #     email = format(instance.email)
-    #
-    #     is_exists = Newsletter.objects.filter(email=email).exists()
-    #     if is_exists:
-    #         raise ValidationError('Email exists')
-    #
-    #     else:
-    #         send_mail(
-    #             'email verification',
-    #             f"you are registered",
-    #             settings.EMAIL_HOST_USER,
-    #             [email],
-    #             fail_silently=False,
-    #         )
-    #     return instance

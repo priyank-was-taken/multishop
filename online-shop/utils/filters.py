@@ -18,17 +18,9 @@ class PriceFilter(BaseFilterBackend):
                 filter_price1 = 0
             if filter_price2 == '':
                 filter_price2 = models.Product.objects.all().aggregate(Max('price'))
-            my_products = models.Product.objects.filter(new_price__range=(filter_price1, filter_price2))
+            my_products = models.Product.objects.filter(price__range=(filter_price1, filter_price2))
             return my_products
 
         else:
             return queryset
 
-
-# class PriceFilter(django_filters.FilterSet):
-#     min_price = django_filters.NumberFilter(name="price", lookup_type='gte')
-#     max_price = django_filters.NumberFilter(name="price", lookup_type='lte')
-#
-#     class Meta:
-#         model = models.Product
-#         fields = ['min_price', 'max_price']

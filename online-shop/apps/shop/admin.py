@@ -45,7 +45,7 @@ class CategoryAdmin2(DraggableMPTTAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'old_price', 'new_price']
+    list_display = ['title', 'old_price', 'price']
 
 
 @admin.register(Contact)
