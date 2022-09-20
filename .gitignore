@@ -35,3 +35,4 @@ CACHE
 CACHE/*
 togit.sh
 venv/*
+env/*
