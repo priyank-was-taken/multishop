@@ -135,6 +135,7 @@ TEMPLATES = [
 ]
 
 MIDDLEWARE = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -165,6 +166,7 @@ INSTALLED_APPS = (
     'apps.shop',
     'django_filters',
     'mptt',
+    'corsheaders'
 
 )
 CUSTOM_APPS = ['user']
@@ -240,3 +242,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "zjhncacmlnnykasb"
 EMAIL_REGEX = True
+
+CORS_ALLOW_ALL_ORIGINS = True

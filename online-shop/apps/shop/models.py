@@ -2,7 +2,7 @@ from django_extensions.db.models import TimeStampedModel, ActivatorModel
 from django.db import models
 from utils.choice import SIZES, COLORS
 from mptt.models import MPTTModel, TreeForeignKey
-
+from user.models import User
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
@@ -85,3 +85,13 @@ class Newsletter(TimeStampedModel):
 
     def __str__(self):
         return self.email
+
+
+# class Cart(TimeStampedModel):
+#     cart_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     products = models.ManyToManyField(Product)
+#
+#     class Meta:
+#         verbose_name = "Cart"
+#         ordering  = ['card_id', '-']
