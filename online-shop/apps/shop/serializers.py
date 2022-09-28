@@ -1,11 +1,12 @@
 from django.conf import settings
 # from django.conf.global_settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+from django.db.models import Avg
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from apps.shop.models import Category, Product, Contact, Checkout, Newsletter
+from apps.shop.models import Category, Product, Contact, Checkout, Newsletter, Review
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -56,6 +57,14 @@ class CheckoutsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ShippingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Checkout
+        fields = '__all__'
+
+
+
 class NewsletterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Newsletter
@@ -72,3 +81,16 @@ class NewsletterSerializer(serializers.ModelSerializer):
             fail_silently=False,
         )
         return email
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = ['product', 'star', 'text', 'name', 'email', 'created']
+
+    # avg_rating = serializers.SerializerMethodField()
+    #
+    # def get_avg_rating(self, ob):
+    #     # reverse lookup on Reviews using item field
+    #     return ob.star.aggregate(Avg('star'))['star__avg']

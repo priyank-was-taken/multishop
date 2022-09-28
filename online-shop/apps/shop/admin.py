@@ -45,7 +45,7 @@ class CategoryAdmin2(DraggableMPTTAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'old_price', 'price']
+    list_display = ['id', 'title', 'old_price', 'price']
 
 
 @admin.register(Contact)
@@ -58,6 +58,13 @@ class CheckoutAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'email', 'city']
 
 
+
+
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
     list_display = ['email', 'created']
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['name', 'product']

@@ -2,7 +2,7 @@ from django_extensions.db.models import TimeStampedModel, ActivatorModel
 from django.db import models
 from utils.choice import SIZES, COLORS
 from mptt.models import MPTTModel, TreeForeignKey
-from user.models import User
+
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
@@ -20,6 +20,10 @@ class Category(MPTTModel):
 
     def __str__(self):
         return self.word
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
 
 class Product(TimeStampedModel, ActivatorModel):
@@ -76,6 +80,26 @@ class Checkout(TimeStampedModel):
         return self.first_name
 
 
+class Shipping(TimeStampedModel):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=30)
+    mobile = models.CharField(max_length=30)
+    address1 = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100)
+    country = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=30)
+    zip = models.IntegerField()
+
+    class Meta:
+        verbose_name = 'Billing'
+        verbose_name_plural = 'Billings'
+
+    def __str__(self):
+        return self.first_name
+
+
 class Newsletter(TimeStampedModel):
     email = models.EmailField(max_length=30, unique=True)
 
@@ -87,3 +111,13 @@ class Newsletter(TimeStampedModel):
         return self.email
 
 
+class Review(TimeStampedModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='rating')
+    star = models.PositiveIntegerField(max_length=5, blank=True, default=0)
+    text = models.TextField(max_length=50)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=30)
+
+    class Meta:
+        verbose_name = 'Review'
+        verbose_name_plural = 'Reviews'

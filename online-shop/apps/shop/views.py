@@ -47,9 +47,18 @@ class CheckoutApiView(generics.CreateAPIView):
     serializer_class = CheckoutsSerializer
 
 
+class ShippingApiView(generics.CreateAPIView):
+    serializer_class = CheckoutsSerializer
+
+
 class NewsletterApiView(generics.CreateAPIView):
     queryset = Newsletter.objects.all()
     serializer_class = NewsletterSerializer
 
     def perform_create(self, serializer):
         serializer.save()
+
+
+class ReviewApiView(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer

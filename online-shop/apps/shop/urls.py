@@ -11,5 +11,7 @@ urlpatterns = [
     path('', include(routers.urls)),
     path('contact/', views.ContactApiView.as_view(), name='contact'),
     path('checkout/', views.CheckoutApiView.as_view(), name='checkout'),
-    path('newsletter/', views.NewsletterApiView.as_view(), name='newsletter')
+    path('shipping/', views.ShippingApiView.as_view(), name='billing'),
+    path('newsletter/', views.NewsletterApiView.as_view(), name='newsletter'),
+    path('review/', views.ReviewApiView.as_view(), name='review')
 ]
