@@ -16,16 +16,6 @@ class ReadProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'image', 'price', 'old_price']
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-
-    class Meta:
-        model = Product
-        fields = ['id', 'title', 'image', 'price', 'old_price', 'description', 'information', 'size', 'color', 'category']
-        # fields = ['id', 'user', 'status', 'created', 'modified', 'activate_date', 'deactivate_date', 'title', 'image',
-        #           'price', 'category']
-
-
 class CategorySerializer(serializers.ModelSerializer):
     product = ReadProductSerializer(read_only=True, many=True)
     product_count = serializers.SerializerMethodField(read_only=True)
@@ -41,6 +31,19 @@ class CategorySerializer(serializers.ModelSerializer):
     def get_children(self, obj):
         data = obj.get_children()
         return CategorySerializer(data, many=True).data
+
+
+class ProductSerializer(serializers.ModelSerializer):
+
+    category = CategorySerializer()
+
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'image', 'price', 'old_price', 'description', 'information', 'size', 'color', 'category']
+        # fields = ['id', 'user', 'status', 'created', 'modified', 'activate_date', 'deactivate_date', 'title', 'image',
+        #           'price', 'category']
+
+
 
 
 class ContactSerializer(serializers.ModelSerializer):

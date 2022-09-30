@@ -113,7 +113,7 @@ class Newsletter(TimeStampedModel):
 
 class Review(TimeStampedModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='rating')
-    star = models.PositiveIntegerField(max_length=5, blank=True, default=0)
+    star = models.PositiveIntegerField(blank=True, default=0)
     text = models.TextField(max_length=50)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=30)
