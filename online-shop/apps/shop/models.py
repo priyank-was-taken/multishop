@@ -21,6 +21,9 @@ class Category(MPTTModel):
     def __str__(self):
         return self.word
 
+    def all_product(self):
+        return self.product.all()
+
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'

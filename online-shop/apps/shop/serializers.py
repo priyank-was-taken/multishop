@@ -23,10 +23,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'word', 'image', 'product_count', 'product', 'parent', 'children']
+        fields = ['id', 'word', 'image', 'product_count', 'parent', 'children', 'product']
 
     def get_product_count(self, obj):
         return obj.product.count()
+
+    def get_product(self):
+        return
 
     def get_children(self, obj):
         data = obj.get_children()
