@@ -1,5 +1,6 @@
 from django_extensions.db.models import TimeStampedModel, ActivatorModel
 from django.db import models
+from user.models import User
 from utils.choice import SIZES, COLORS
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -124,3 +125,18 @@ class Review(TimeStampedModel):
     class Meta:
         verbose_name = 'Review'
         verbose_name_plural = 'Reviews'
+
+
+class Cart(TimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.IntegerField(null=False)
+
+    class Meta:
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'
+
+    def __str__(self):
+        return "{} - {} - {}".format(self.user,
+                                     self.product,
+                                     self.quantity)

@@ -58,6 +58,9 @@ class CheckoutAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'email', 'city']
 
 
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ['product', 'created', 'modified']
 
 
 @admin.register(Newsletter)

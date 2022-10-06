@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from apps.shop.models import Category, Product, Contact, Checkout, Newsletter, Review
+from apps.shop.models import Category, Product, Contact, Checkout, Newsletter, Review, Cart
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -47,8 +47,6 @@ class ProductSerializer(serializers.ModelSerializer):
         #           'price', 'category']
 
 
-
-
 class ContactSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -68,7 +66,6 @@ class ShippingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         fields = '__all__'
-
 
 
 class NewsletterSerializer(serializers.ModelSerializer):
@@ -100,3 +97,28 @@ class ReviewSerializer(serializers.ModelSerializer):
     # def get_avg_rating(self, ob):
     #     # reverse lookup on Reviews using item field
     #     return ob.star.aggregate(Avg('star'))['star__avg']
+
+
+class ReadCartProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'image', 'price']
+
+
+class CartSerializer(serializers.ModelSerializer):
+    # product = ReadCartProductSerializer()
+    # user = serializers.StringRelatedField()
+
+    class Meta:
+        model = Cart
+        fields = ['user', 'product', 'quantity', 'created', 'modified']
+
+
+class ReadCartSerializer(serializers.ModelSerializer):
+    product = ReadCartProductSerializer(read_only=True)
+    # user = serializers.StringRelatedField()
+
+    class Meta:
+        model = Cart
+        fields = ['id', 'user', 'product', 'quantity', 'created', 'modified']
+
