@@ -8,6 +8,18 @@ from rest_framework.response import Response
 from apps.shop import models
 
 
+class CategoryFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+        if 'category' in request.GET:
+            filter_category = request.GET.get('category')
+            my_products = models.Product.objects.filter(category__word=filter_category)
+            return my_products
+
+        else:
+            return queryset
+
+
 class PriceFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
