@@ -18,7 +18,7 @@ class ListRetrieveView(mixins.ListModelMixin, mixins.RetrieveModelMixin, Generic
 class ProductApiView(ListRetrieveView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = [SearchFilter, filters.CategoryFilter,filters.PriceFilter]
+    filter_backends = [SearchFilter, filters.PriceFilter]
 
     search_fields = ['title', 'description', 'information', 'category__word']
 
