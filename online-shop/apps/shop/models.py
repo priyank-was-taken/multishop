@@ -131,12 +131,30 @@ class Cart(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.IntegerField(null=False)
+    total_price = models.IntegerField()
 
     class Meta:
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
 
+
     def __str__(self):
         return "{} - {} - {}".format(self.user,
                                      self.product,
                                      self.quantity)
+
+
+# -------------------just for testing--------------------
+class Test(TimeStampedModel):
+    name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=30)
+    password = models.CharField(max_length=30)
+    message = models.TextField()
+
+    class Meta:
+        verbose_name = 'Test'
+        verbose_name_plural = 'Tests'
+
+    def __str__(self):
+        return self.name
+

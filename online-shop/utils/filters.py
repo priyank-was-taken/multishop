@@ -21,22 +21,22 @@ class PriceFilter(BaseFilterBackend):
                     filter_price1 = 0
                 if filter_price2 == '':
                     filter_price2 = models.Product.objects.all().aggregate(Max('price'))
-                products = models.Product.objects.filter(category__word=filter_category, price__range=(filter_price1, filter_price2))
+                products = models.Product.objects.filter(category__word=filter_category,
+                                                         price__range=(filter_price1, filter_price2))
 
                 return products
             return my_products
 
         elif 'min_price' in request.GET:
-                filter_price1 = request.GET.get('min_price')
-                filter_price2 = request.GET.get('max_price')
-                if filter_price1 == '':
-                    filter_price1 = 0
-                if filter_price2 == '':
-                    filter_price2 = models.Product.objects.all().aggregate(Max('price'))
-                products = models.Product.objects.filter(price__range=(filter_price1, filter_price2))
+            filter_price1 = request.GET.get('min_price')
+            filter_price2 = request.GET.get('max_price')
+            if filter_price1 == '':
+                filter_price1 = 0
+            if filter_price2 == '':
+                filter_price2 = models.Product.objects.all().aggregate(Max('price'))
+            products = models.Product.objects.filter(price__range=(filter_price1, filter_price2))
 
-                return products
+            return products
 
         else:
             return queryset
-

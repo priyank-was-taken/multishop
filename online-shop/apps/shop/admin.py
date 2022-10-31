@@ -4,8 +4,8 @@ from mptt.admin import DraggableMPTTAdmin
 from .models import *
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'word']
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'word']
 
 
 @admin.register(Category)
@@ -71,3 +71,9 @@ class NewsletterAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['name', 'product']
+
+
+# -------------------just for testing--------------------
+@admin.register(Test)
+class TestAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'email', 'password', 'message']

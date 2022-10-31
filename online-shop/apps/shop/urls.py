@@ -7,6 +7,7 @@ routers = routers.DefaultRouter()
 routers.register('product', views.ProductApiView, basename='shop')
 routers.register('category', views.CategoryApiView, basename='category')
 routers.register('cart', views.CartApiView, basename='cart')
+routers.register('test', views.TestApiView, basename='test')
 
 urlpatterns = [
     path('', include(routers.urls)),
@@ -15,5 +16,4 @@ urlpatterns = [
     path('shipping/', views.ShippingApiView.as_view(), name='billing'),
     path('newsletter/', views.NewsletterApiView.as_view(), name='newsletter'),
     path('review/', views.ReviewApiView.as_view(), name='review'),
-    path('cart/delete/', views.CartDestroyApi.as_view(), name='cartdelete')
 ]

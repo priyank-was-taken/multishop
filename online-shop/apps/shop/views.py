@@ -88,13 +88,13 @@ class CartApiView(ModelViewSet):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class CartDestroyApi(generics.DestroyAPIView):
-    serializer_class = CartSerializer
-    queryset = Cart.objects.all()
+# -------------------just for testing--------------------
 
-    def delete_cart_item(self, request):
-        cart_product_id = request.GET.get('cart_product_id')
-        Cart.objects.filter(cart__user=request.user.id, id=cart_product_id)
-        return Response("item deleted")
+class TestApiView(ModelViewSet):
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
