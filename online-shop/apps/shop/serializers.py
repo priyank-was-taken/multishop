@@ -102,8 +102,8 @@ class ReadCartProductSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    # product = ReadCartProductSerializer()
-    # user = serializers.StringRelatedField()
+    product = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Cart
@@ -111,6 +111,8 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class WishlistSerializer(serializers.ModelSerializer):
+    product = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Wishlist
