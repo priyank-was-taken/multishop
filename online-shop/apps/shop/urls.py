@@ -11,6 +11,7 @@ routers.register('test', views.TestApiView, basename='test')
 
 urlpatterns = [
     path('', include(routers.urls)),
+    # path('cart/', views.CartApiView.as_view(), name= 'cart'),
     path('contact/', views.ContactApiView.as_view(), name='contact'),
     path('checkout/', views.CheckoutApiView.as_view(), name='checkout'),
     path('shipping/', views.ShippingApiView.as_view(), name='billing'),

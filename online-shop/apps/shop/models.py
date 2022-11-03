@@ -128,15 +128,13 @@ class Review(TimeStampedModel):
 
 
 class Cart(TimeStampedModel):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
-    quantity = models.IntegerField(null=False)
-    total_price = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField(default=1, blank=True)
 
     class Meta:
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
-
 
     def __str__(self):
         return "{} - {} - {}".format(self.user,

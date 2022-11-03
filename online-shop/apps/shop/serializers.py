@@ -107,7 +107,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['user', 'product', 'quantity', 'created', 'modified']
+        fields = ['id', 'user', 'product', 'created', 'modified', 'quantity']
 
 
 class ReadCartSerializer(serializers.ModelSerializer):
@@ -117,7 +117,7 @@ class ReadCartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'product', 'quantity', 'created', 'modified']
+        fields = ['id', 'user', 'product', 'created', 'modified']
 
 
 # -------------------just for testing--------------------
