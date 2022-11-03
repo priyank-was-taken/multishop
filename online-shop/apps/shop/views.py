@@ -105,6 +105,26 @@ class CartApiView(ListRetrieveDeleteCreateView):
         return Response(serializer.data)
 
 
+class WishlistApiView(ListRetrieveDeleteCreateView):
+    queryset = Wishlist.objects.all()
+    serializer_class = WishlistSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        product = Product.objects.get(pk=request.data['product'])
+        user = User.objects.get(pk=request.data['user'])
+        wishlist_product = Wishlist.objects.filter(user=user, product=product)
+        if wishlist_product:
+            return Response('product already in wishlist')
+        else:
+            user = User.objects.get(pk=request.data['user'])
+            wishlist = Wishlist.objects.create(user=user, product=product)
+            serializer = CartSerializer(wishlist, many=True)
+            # serializer.save(user=self.request.user)
+        return Response(serializer.data)
+
+
 # -------------------just for testing--------------------
 
 

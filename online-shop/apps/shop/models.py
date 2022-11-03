@@ -142,6 +142,19 @@ class Cart(TimeStampedModel):
                                      self.quantity)
 
 
+class Wishlist(TimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Wishlist'
+        verbose_name_plural = 'Wishlists'
+
+    def __str__(self):
+        return "{} - {}".format(self.user,
+                                self.product, )
+
+
 # -------------------just for testing--------------------
 class Test(TimeStampedModel):
     name = models.CharField(max_length=30)
@@ -155,4 +168,3 @@ class Test(TimeStampedModel):
 
     def __str__(self):
         return self.name
-

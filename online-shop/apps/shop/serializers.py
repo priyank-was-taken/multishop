@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from apps.shop.models import Category, Product, Contact, Checkout, Newsletter, Review, Cart, Test
+from apps.shop.models import Category, Product, Contact, Checkout, Newsletter, Review, Cart, Test, Wishlist
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -108,6 +108,13 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ['id', 'user', 'product', 'created', 'modified', 'quantity']
+
+
+class WishlistSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Wishlist
+        fields = ['id', 'user', 'product', 'created', 'modified']
 
 
 class ReadCartSerializer(serializers.ModelSerializer):

@@ -63,6 +63,11 @@ class CartAdmin(admin.ModelAdmin):
     list_display = ['product', 'created', 'modified']
 
 
+@admin.register(Wishlist)
+class WishlistAdmin(admin.ModelAdmin):
+    list_display = ['product', 'created', 'modified']
+
+
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
     list_display = ['email', 'created']

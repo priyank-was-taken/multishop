@@ -7,6 +7,7 @@ routers = routers.DefaultRouter()
 routers.register('product', views.ProductApiView, basename='shop')
 routers.register('category', views.CategoryApiView, basename='category')
 routers.register('cart', views.CartApiView, basename='cart')
+routers.register('wishlist', views.WishlistApiView, basename='wishlist')
 routers.register('test', views.TestApiView, basename='test')
 
 urlpatterns = [
