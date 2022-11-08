@@ -103,7 +103,14 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'product', 'price', 'created', 'modified', 'quantity']
+        fields = ['id', 'user', 'product', 'net_price', 'created', 'modified', 'quantity']
+
+    # def update(self, instance, validated_data):
+    #     if "quantity" in validated_data:
+    #         instance.quantity = validated_data.get('quantity')
+    #         instance.save()
+    #     return super().update(instance, validated_data)
+
 
     # def get_product_count(self, obj):
     #     return obj.product.count()

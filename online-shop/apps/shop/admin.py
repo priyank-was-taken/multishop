@@ -60,7 +60,7 @@ class CheckoutAdmin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ['product', 'created', 'modified', 'price']
+    list_display = ['product', 'created', 'modified', 'net_price']
 
 
 @admin.register(Wishlist)

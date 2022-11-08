@@ -66,14 +66,28 @@ class ReviewApiView(generics.ListCreateAPIView):
     serializer_class = shop_serializer.ReviewSerializer
 
 
-class ListRetrieveDeleteCreateView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
+class ListRetrieveUpdateDeleteCreateView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
                                    mixins.CreateModelMixin, mixins.UpdateModelMixin, GenericViewSet):
     pass
 
 
-class CartApiView(ListRetrieveDeleteCreateView):
+class CartApiView(ListRetrieveUpdateDeleteCreateView):
     queryset = models.Cart.objects.all()
     serializer_class = shop_serializer.CartSerializer
+
+    # def update(self, request, *args, **kwargs):
+    #     partial = kwargs.pop('partial', False)
+    #     instance = self.get_object()
+    #     serializer = shop_serializer.CartSerializer(instance, data=request.data, partial=partial)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
+    #
+    #     if getattr(instance, '_prefetched_objects_cache', None):
+    #         # If 'prefetch_related' has been applied to a queryset, we need to
+    #         # forcibly invalidate the prefetch cache on the instance.
+    #         instance._prefetched_objects_cache = {}
+    #
+    #     return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -105,7 +119,7 @@ class CartApiView(ListRetrieveDeleteCreateView):
         return Response(serializer.data)
 
 
-class WishlistApiView(ListRetrieveDeleteCreateView):
+class WishlistApiView(ListRetrieveUpdateDeleteCreateView):
     queryset = models.Wishlist.objects.all()
     serializer_class = shop_serializer.WishlistSerializer
 
