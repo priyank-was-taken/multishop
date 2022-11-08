@@ -102,8 +102,8 @@ class ReadCartProductSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    product = serializers.StringRelatedField()
-    user = serializers.StringRelatedField()
+    # product = serializers.StringRelatedField()
+    # user = serializers.StringRelatedField()
     # product_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
