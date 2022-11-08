@@ -1,3 +1,5 @@
+from itertools import product
+
 from django_extensions.db.models import TimeStampedModel, ActivatorModel
 from django.db import models
 from user.models import User
@@ -140,6 +142,13 @@ class Cart(TimeStampedModel):
         return "{} - {} - {}".format(self.user,
                                      self.product,
                                      self.quantity)
+
+    # @property
+    # def total_item(self):
+    #     count = sum(self.quantity)
+
+    # def get_price_total(self):
+    #     return sum([product.price for product in self.product.all()])
 
 
 class Wishlist(TimeStampedModel):

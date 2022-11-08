@@ -75,17 +75,6 @@ class CartApiView(ListRetrieveDeleteCreateView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #
-    #     page = self.paginate_queryset(queryset)
-    #     if page is not None:
-    #         serializer = ReadCartSerializer(page, many=True)
-    #         return self.get_paginated_response(serializer.data)
-    #
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
-
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -101,7 +90,7 @@ class CartApiView(ListRetrieveDeleteCreateView):
             user = User.objects.get(pk=request.data['user'])
             cart = Cart.objects.create(user=user, product=product, quantity=quantity)
             serializer = CartSerializer(cart)
-            # serializer.save(user=self.request.user)
+
         return Response(serializer.data)
 
 
@@ -110,7 +99,6 @@ class WishlistApiView(ListRetrieveDeleteCreateView):
     serializer_class = WishlistSerializer
 
     def create(self, request, *args, **kwargs):
-        queryset = Cart.objects.all()
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         product = Product.objects.get(pk=request.data['product'])
@@ -122,7 +110,7 @@ class WishlistApiView(ListRetrieveDeleteCreateView):
             user = User.objects.get(pk=request.data['user'])
             wishlist = Wishlist.objects.create(user=user, product=product)
             serializer = WishlistSerializer(wishlist)
-            # serializer.save(user=self.request.user)
+
         return Response(serializer.data)
 
 

@@ -104,10 +104,14 @@ class ReadCartProductSerializer(serializers.ModelSerializer):
 class CartSerializer(serializers.ModelSerializer):
     product = serializers.StringRelatedField()
     user = serializers.StringRelatedField()
+    # product_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Cart
         fields = ['id', 'user', 'product', 'created', 'modified', 'quantity']
+
+    def get_product_count(self, obj):
+        return obj.product.count()
 
 
 class WishlistSerializer(serializers.ModelSerializer):
