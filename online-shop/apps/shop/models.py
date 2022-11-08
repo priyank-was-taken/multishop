@@ -133,10 +133,15 @@ class Cart(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField(default=1, blank=True)
+    price = models.FloatField(max_length=255, null=True, blank=True, editable=False)
 
     class Meta:
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
+
+    def save(self, *args, **kwargs):
+        self.price = int(self.quantity) * int(self.product.price)
+        super(Cart, self).save(*args, **kwargs)
 
     def __str__(self):
         return "{} - {} - {}".format(self.user,

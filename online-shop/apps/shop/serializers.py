@@ -95,23 +95,26 @@ class ReviewSerializer(serializers.ModelSerializer):
     #     return ob.star.aggregate(Avg('star'))['star__avg']
 
 
-class ReadCartProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ['id', 'title', 'image', 'price']
-
-
 class CartSerializer(serializers.ModelSerializer):
-    # product = serializers.StringRelatedField()
+
+    # product_id = serializers.SlugRelatedField(queryset=Product.objects.all(), slug_field='title', write_only=True)
     # user = serializers.StringRelatedField()
     # product_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'product', 'created', 'modified', 'quantity']
+        fields = ['id', 'user', 'product', 'price', 'created', 'modified', 'quantity']
 
-    def get_product_count(self, obj):
-        return obj.product.count()
+    # def get_product_count(self, obj):
+    #     return obj.product.count()
+
+
+class ReadCartProductSerializer(serializers.ModelSerializer):
+    product = ReadProductSerializer()
+
+    class Meta:
+        model = Cart
+        fields = '__all__'
 
 
 class WishlistSerializer(serializers.ModelSerializer):
@@ -123,14 +126,14 @@ class WishlistSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'product', 'created', 'modified']
 
 
-class ReadCartSerializer(serializers.ModelSerializer):
-    product = ReadCartProductSerializer(read_only=True)
-
-    # user = serializers.StringRelatedField()
-
-    class Meta:
-        model = Cart
-        fields = ['id', 'user', 'product', 'created', 'modified']
+# class ReadCartSerializer(serializers.ModelSerializer):
+#     product = ReadCartProductSerializer(read_only=True)
+#
+#     # user = serializers.StringRelatedField()
+#
+#     class Meta:
+#         model = Cart
+#         fields = ['id', 'user', 'product', 'created', 'modified']
 
 
 # -------------------just for testing--------------------
