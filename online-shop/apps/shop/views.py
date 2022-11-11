@@ -10,7 +10,8 @@ from rest_framework import mixins, filters, status
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework import generics
 from rest_framework.response import Response
-from utils import filters
+from utils import filter
+from rest_framework import filters
 
 
 class ListRetrieveView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
@@ -20,7 +21,7 @@ class ListRetrieveView(mixins.ListModelMixin, mixins.RetrieveModelMixin, Generic
 class ProductApiView(ListRetrieveView):
     queryset = models.Product.objects.all()
     serializer_class = shop_serializer.ProductSerializer
-    filter_backends = [SearchFilter, filters.PriceFilter]
+    filter_backends = [SearchFilter, filter.PriceFilter]
 
     search_fields = ['title', 'description', 'information', 'category__word']
 
@@ -74,20 +75,23 @@ class ListRetrieveUpdateDeleteCreateView(mixins.ListModelMixin, mixins.RetrieveM
 class CartApiView(ListRetrieveUpdateDeleteCreateView):
     queryset = models.Cart.objects.all()
     serializer_class = shop_serializer.CartSerializer
+    filter_backends = [filters.OrderingFilter]
+    # ordering_fields = ['-created']
+    ordering =["created"]
 
-    # def update(self, request, *args, **kwargs):
-    #     partial = kwargs.pop('partial', False)
-    #     instance = self.get_object()
-    #     serializer = shop_serializer.CartSerializer(instance, data=request.data, partial=partial)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_update(serializer)
-    #
-    #     if getattr(instance, '_prefetched_objects_cache', None):
-    #         # If 'prefetch_related' has been applied to a queryset, we need to
-    #         # forcibly invalidate the prefetch cache on the instance.
-    #         instance._prefetched_objects_cache = {}
-    #
-    #     return Response(serializer.data)
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = shop_serializer.CartSerializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
