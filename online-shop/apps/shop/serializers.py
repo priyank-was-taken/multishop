@@ -1,6 +1,7 @@
 from django.conf import settings
 # from django.conf.global_settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+
 from django.db.models import Avg
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -96,7 +97,6 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-
     # product_id = serializers.SlugRelatedField(queryset=Product.objects.all(), slug_field='title', write_only=True)
     # user = serializers.StringRelatedField()
     # product_count = serializers.SerializerMethodField(read_only=True)
@@ -111,13 +111,12 @@ class CartSerializer(serializers.ModelSerializer):
     #         instance.save()
     #     return super().update(instance, validated_data)
 
-
     # def get_product_count(self, obj):
     #     return obj.product.count()
 
 
 class ReadCartProductSerializer(serializers.ModelSerializer):
-    product = ReadProductSerializer()
+    product = ReadProductSerializer(read_only=True)
 
     class Meta:
         model = Cart

@@ -2,7 +2,7 @@ import django_filters
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
-
+from rest_framework.status import *
 from user.models import User
 from apps.shop import serializers as shop_serializer
 from apps.shop import models
@@ -22,18 +22,30 @@ class ProductApiView(ListRetrieveView):
     queryset = models.Product.objects.all()
     serializer_class = shop_serializer.ProductSerializer
     filter_backends = [SearchFilter, filter.PriceFilter]
+    # permission_classes =
 
     search_fields = ['title', 'description', 'information', 'category__word']
 
-    @action(detail=False, url_path='', url_name='recent_product')
+    @action(detail=False, url_path='recent_product')
     def recent_products(self, request):
-        recent_products = models.Product.objects.all().order_by('-created')[:2]
+        recent_products = models.Product.objects.all().order_by('-created')[:4]
         # page = self.paginate_queryset(recent_products)
         # if page is not None:
         #     serializer = self.get_serializer(page, many=True)
         #     return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(recent_products, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, url_path='recent_product/(?P<pk>\d+)')
+    def recent_products_detail(self, request, pk):
+        id = int(self.kwargs['pk'])
+        recent_products = [*models.Product.objects.order_by('-created')[:4].values_list("id", flat=True)]
+        if id in recent_products:
+            recent_products = models.Product.objects.get(pk=id)
+            serializer = self.get_serializer(recent_products, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response(status=HTTP_404_NOT_FOUND)
 
 
 class CategoryApiView(ListRetrieveView):
@@ -68,7 +80,7 @@ class ReviewApiView(generics.ListCreateAPIView):
 
 
 class ListRetrieveUpdateDeleteCreateView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
-                                   mixins.CreateModelMixin, mixins.UpdateModelMixin, GenericViewSet):
+                                         mixins.CreateModelMixin, mixins.UpdateModelMixin, GenericViewSet):
     pass
 
 
@@ -77,7 +89,7 @@ class CartApiView(ListRetrieveUpdateDeleteCreateView):
     serializer_class = shop_serializer.CartSerializer
     filter_backends = [filters.OrderingFilter]
     # ordering_fields = ['-created']
-    ordering =["created"]
+    ordering = ["created"]
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -153,4 +165,3 @@ class TestApiView(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
-
