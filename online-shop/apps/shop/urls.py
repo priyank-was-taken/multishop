@@ -1,6 +1,10 @@
 from rest_framework import routers
 from apps.shop import views
 from django.urls import path, include
+# from project.views import custom404
+
+
+handler404 = views.custom404
 
 routers = routers.DefaultRouter()
 
@@ -18,4 +22,6 @@ urlpatterns = [
     path('shipping/', views.ShippingApiView.as_view(), name='billing'),
     path('newsletter/', views.NewsletterApiView.as_view(), name='newsletter'),
     path('review/', views.ReviewApiView.as_view(), name='review'),
+    path('product_list', views.last_products, name='product'),
 ]
+

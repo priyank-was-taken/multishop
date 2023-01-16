@@ -1,5 +1,6 @@
 import django_filters
-from rest_framework.decorators import action
+from django.http import JsonResponse
+from rest_framework.decorators import action, api_view
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.status import *
@@ -12,6 +13,14 @@ from rest_framework import generics
 from rest_framework.response import Response
 from utils import filter
 from rest_framework import filters
+from django.http import JsonResponse
+
+
+def custom404(request, exception=None):
+    return JsonResponse({
+        'status_code': 404,
+        'error': 'The resource was not found'
+    }, status=404)
 
 
 class ListRetrieveView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
@@ -165,3 +174,12 @@ class TestApiView(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
+
+
+@api_view(['GET'])
+def last_products(request):
+    if request.method == 'GET':
+        product = models.Product.objects.all().order_by("created")[:5]
+        serializer = shop_serializer.ProductSerializer(product, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
