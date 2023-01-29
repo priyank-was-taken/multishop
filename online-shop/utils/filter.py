@@ -40,3 +40,25 @@ class PriceFilter(BaseFilterBackend):
 
         else:
             return queryset
+
+
+class ColorFilter(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        if 'category' in request.GET:
+            filter_category = request.GET.get('category')
+            my_products = models.Product.objects.filter(category__word=filter_category)
+            if 'color' in request.GET:
+                color_filter = request.GET.get('color')
+                products = models.Product.objects.filter(category__word=filter_category,
+                                                         color__exact=color_filter)
+                return products
+            return my_products
+
+        elif 'color' in request.GET:
+            color_filter = request.GET.get('color')
+            products = models.Product.objects.filter(color__exact=color_filter)
+
+            return products
+
+        else:
+            return queryset

@@ -1,5 +1,6 @@
 import django_filters
 from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action, api_view
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
@@ -30,7 +31,7 @@ class ListRetrieveView(mixins.ListModelMixin, mixins.RetrieveModelMixin, Generic
 class ProductApiView(ListRetrieveView):
     queryset = models.Product.objects.all()
     serializer_class = shop_serializer.ProductSerializer
-    filter_backends = [SearchFilter, filter.PriceFilter]
+    filter_backends = [SearchFilter, filter.PriceFilter, filter.ColorFilter]
     # permission_classes =
 
     search_fields = ['title', 'description', 'information', 'category__word']
